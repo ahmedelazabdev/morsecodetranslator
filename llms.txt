@@ -1,0 +1,19 @@
+# Morse Code Translator
+> Instant Text-to-Morse & Morse-to-Text Translator with Acoustic Audio CW Player
+
+## Project Overview
+Morse Code Translator is a high-speed, zero-dependency client-side utility built to convert Latin text to International Morse Code and decode dots and dashes back into human-readable text. It includes a built-in Web Audio API CW tone generator that synthesizes realistic radio telegraphy dits and dahs.
+
+## Canonical URL
+https://ahmedelazabdev.github.io/morsecodetranslator/
+
+## Core Features
+- Full International Morse Code (ITU-R M.1677-1) dictionary covering A-Z, 0-9, and standard punctuation marks.
+- Bi-directional instant conversion (Text to Morse & Morse to Text) with single-click direction swapping.
+- Web Audio API acoustic sound player with customizable speed (12 to 32 WPM) and tone pitch (500 Hz to 750 Hz).
+- PARIS standard timing accuracy with smoothed sound attack/decay envelopes (zero speaker clicks).
+- Live visual optical signal flash indicator.
+- Client-side privacy: Zero network transmission, zero cookies, 100% in-browser processing.
+
+## Target Audience
+Radio amateurs (Ham Radio CW enthusiasts), pilots, naval officers, scouts, developers, and students learning telecommunication history.
