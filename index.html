@@ -123,10 +123,10 @@
       --bg: #f8fafc;
       --surface: #ffffff;
       --border: #cbd5e1;
-      --border-dark: #64748b;
+      --border-dark: #475569;
       --text: #0f172a;
       --text-muted: #1e293b;
-      --text-subtle: #475569;
+      --text-subtle: #334155;
       --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
       --shadow-xl: 0 10px 25px -5px rgba(0,0,0,0.08);
       --radius: 14px;
@@ -182,7 +182,7 @@
 
     .brand-badge {
       background: var(--primary);
-      color: #fff;
+      color: #ffffff;
       width: 36px;
       height: 36px;
       border-radius: 8px;
@@ -211,9 +211,11 @@
       flex: 1;
     }
 
+    /* Hero optimized for instant paint without layout shifts */
     .hero {
       text-align: center;
       margin-bottom: 24px;
+      contain: layout style;
     }
 
     .hero h1 {
@@ -273,7 +275,7 @@
       padding: 6px 12px;
       border-radius: 6px;
       border: 1px solid var(--border-dark);
-      background: #fff;
+      background: #ffffff;
       font-family: inherit;
       font-size: 0.9rem;
       font-weight: 700;
@@ -413,8 +415,8 @@
     }
 
     .signal-light.active {
-      background: #ef4444;
-      box-shadow: 0 0 10px #ef4444;
+      background: #dc2626;
+      box-shadow: 0 0 10px #dc2626;
     }
 
     .action-controls {
@@ -452,22 +454,23 @@
       background: var(--primary-hover);
     }
 
+    /* WCAG AAA High-Contrast Buttons */
     .btn-play {
-      background: #059669;
+      background: #065f46;
       color: #ffffff;
     }
 
     .btn-play:hover {
-      background: #047857;
+      background: #044e3b;
     }
 
     .btn-stop {
-      background: #dc2626;
+      background: #b91c1c;
       color: #ffffff;
     }
 
     .btn-stop:hover {
-      background: #b91c1c;
+      background: #991b1b;
     }
 
     .btn-secondary {
@@ -529,7 +532,7 @@
       color: var(--text-muted);
     }
 
-    /* Article Area */
+    /* Defers below-the-fold layout calculations to eliminate LCP delay */
     .article-container {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -537,6 +540,8 @@
       padding: 36px 32px;
       box-shadow: var(--shadow-sm);
       margin-bottom: 40px;
+      content-visibility: auto;
+      contain-intrinsic-size: 1000px 1400px;
     }
 
     @media (max-width: 600px) {
@@ -687,7 +692,7 @@
       left: 50%;
       transform: translateX(-50%) translateY(100px);
       background: #0f172a;
-      color: #fff;
+      color: #ffffff;
       padding: 8px 20px;
       border-radius: 9999px;
       font-size: 0.9rem;
@@ -1181,14 +1186,14 @@
         const c = morse[i];
         if (c === '.') {
           queue.push({ on: true, dur: dotMs });
-          queue.push({ on: false, dur: dotMs }); // inter-element
+          queue.push({ on: false, dur: dotMs });
         } else if (c === '-') {
           queue.push({ on: true, dur: dotMs * 3 });
           queue.push({ on: false, dur: dotMs });
         } else if (c === ' ') {
-          queue.push({ on: false, dur: dotMs * 2 }); // total 3 with previous
+          queue.push({ on: false, dur: dotMs * 2 });
         } else if (c === '/' || c === '\n') {
-          queue.push({ on: false, dur: dotMs * 6 }); // total 7 with previous
+          queue.push({ on: false, dur: dotMs * 6 });
         }
       }
 
@@ -1211,7 +1216,6 @@
           osc.type = 'sine';
           osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
-          // Envelope to avoid speaker clicks
           gain.gain.setValueAtTime(0, audioCtx.currentTime);
           gain.gain.linearRampToValueAtTime(0.8, audioCtx.currentTime + 0.005);
           gain.gain.setValueAtTime(0.8, audioCtx.currentTime + (item.dur / 1000) - 0.005);
