@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- High-CTR SEO Meta -->
+  <title>Morse Code Translator 📡 Convert Text & Audio (100% Free & Instant)</title>
+  <meta name="description" content="Translate text to Morse code and decode Morse code to English instantly. Play realistic sound beeps with adjustable WPM and pitch, light flash signals, and zero delay.">
+  <meta name="keywords" content="morse code translator, text to morse, morse code decoder, morse code audio player, morse sound generator, learn morse code, international morse code">
+  <meta name="author" content="Ahmed Elazab">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  
+  <!-- Absolute Canonical URL -->
+  <link rel="canonical" href="https://ahmedelazabdev.github.io/morsecodetranslator/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ahmedelazabdev.github.io/morsecodetranslator/">
+  <meta property="og:title" content="Morse Code Translator 📡 Convert Text to Morse & Audio Online">
+  <meta property="og:description" content="Translate text to Morse code and decode dots & dashes back to readable text. Listen to acoustic CW audio beeps at customizable speeds directly in your browser.">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Morse Code Translator 📡 Instant Text & Audio Converter">
+  <meta name="twitter:description" content="Free two-way Morse code decoder and sound player. Convert text to dots & dashes and play acoustic CW radio beeps with zero setup.">
+
+  <!-- Structured Data: WebApplication, HowTo & FAQPage Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Morse Code Translator & Audio Player",
+        "url": "https://ahmedelazabdev.github.io/morsecodetranslator/",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "description": "An interactive bilingual Morse code encoder and decoder with a built-in Web Audio API tone generator that synthesizes precise standard CW dits and dahs.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "HowTo",
+        "name": "How to Translate Text to Morse Code and Play Audio",
+        "description": "Step-by-step instructions on converting plain English text into International Morse Code and playing audio beeps.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "name": "Input text or Morse code",
+            "text": "Type or paste your alphanumeric message into the input field, or paste existing dots (.) and dashes (-) to decode."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Configure playback speed",
+            "text": "Adjust the playback speed (WPM) and tone pitch (Hz) in the top configuration bar according to your listening preference."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Listen to sound beeps",
+            "text": "Click the Play Audio button to listen to acoustic CW radio dits and dahs synthesized in real-time."
+          },
+          {
+            "@type": "HowToStep",
+            "name": "Copy or download",
+            "text": "Copy the translated dots and dashes directly to your clipboard or download them as a plain text file."
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is the standard timing rule in International Morse Code?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The international standard defines 1 dot (dit) as the base unit. A dash (dah) equals 3 dits. The silence between elements of the same letter is 1 dit, the space between letters is 3 dits, and the space between words is 7 dits."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is Morse Code audio calculated (WPM)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Speed is measured using the standard PARIS standard, where the word PARIS requires exactly 50 dot-units. At 20 Words Per Minute (WPM), one dot unit lasts exactly 60 milliseconds (1200 / WPM)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What character represents spaces between words in Morse code?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In written Morse code representation, a forward slash (/) or three consecutive spaces are universally used to separate distinct words."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does this translator work offline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The entire translation logic and audio frequency synthesis run 100% locally in your web browser with zero server API dependencies."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-hover: #1e40af;
+      --primary-soft: #eff6ff;
+      --accent: #065f46;
+      --accent-soft: #d1fae5;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #cbd5e1;
+      --border-dark: #64748b;
+      --text: #0f172a;
+      --text-muted: #1e293b;
+      --text-subtle: #475569;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-xl: 0 10px 25px -5px rgba(0,0,0,0.08);
+      --radius: 14px;
+      --font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+      height: 64px;
+    }
+
+    .nav-inner {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .brand-badge {
+      background: var(--primary);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
+    .status-tag {
+      background: var(--accent-soft);
+      color: #064e3b;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      border: 1px solid #6ee7b7;
+    }
+
+    main {
+      max-width: 1050px;
+      width: 100%;
+      margin: 20px auto 40px;
+      padding: 0 16px;
+      flex: 1;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: 2.15rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* Main Tool Card */
+    .cleaner-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .card-topbar {
+      background: #f1f5f9;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .config-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .mode-label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    select.mode-dropdown {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-dark);
+      background: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .playback-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .playback-controls label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (max-width: 800px) {
+      .workspace-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pane {
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      background: #ffffff;
+    }
+
+    .pane-left {
+      border-right: 1px solid var(--border);
+    }
+
+    @media (max-width: 800px) {
+      .pane-left {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+    }
+
+    .pane-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .pane-title {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .indicator-badge {
+      font-size: 0.8rem;
+      color: #064e3b;
+      background: #dcfce7;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      border: 1px solid #86efac;
+    }
+
+    .code-input {
+      width: 100%;
+      height: 230px;
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      color: #000000;
+      resize: vertical;
+      outline: none;
+      background: #ffffff;
+      line-height: 1.5;
+    }
+
+    .code-input:focus {
+      border-color: var(--primary);
+    }
+
+    .code-output {
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .stats-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .stat-item .val {
+      font-weight: 800;
+      font-size: 1.1rem;
+      display: block;
+      color: var(--text);
+    }
+
+    .stat-item .lbl {
+      font-size: 0.72rem;
+      color: var(--text-subtle);
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    /* Sound Visualizer Flash */
+    .signal-light {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #cbd5e1;
+      margin-left: 6px;
+      transition: background 0.05s ease;
+    }
+
+    .signal-light.active {
+      background: #ef4444;
+      box-shadow: 0 0 10px #ef4444;
+    }
+
+    .action-controls {
+      padding: 14px 18px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-play {
+      background: #059669;
+      color: #ffffff;
+    }
+
+    .btn-play:hover {
+      background: #047857;
+    }
+
+    .btn-stop {
+      background: #dc2626;
+      color: #ffffff;
+    }
+
+    .btn-stop:hover {
+      background: #b91c1c;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      border-color: var(--border-dark);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #f1f5f9;
+    }
+
+    /* Step Banners */
+    .action-steps-bar {
+      padding: 16px 20px;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .action-steps-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .action-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-title {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .step-text p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Article Area */
+    .article-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .article-container {
+        padding: 20px 16px;
+      }
+    }
+
+    .article-container h2 {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--text);
+      margin: 32px 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .article-container h2:first-of-type {
+      margin-top: 0;
+    }
+
+    .article-container h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 20px 0 10px;
+      color: #1e293b;
+    }
+
+    .article-container p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      text-align: justify;
+    }
+
+    .article-container ul, .article-container ol {
+      margin: 0 0 20px 20px;
+      color: var(--text-muted);
+    }
+
+    .article-container li {
+      margin-bottom: 8px;
+    }
+
+    .highlight-card {
+      background: var(--primary-soft);
+      border-left: 4px solid var(--primary);
+      padding: 14px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0;
+      color: #172554;
+      font-size: 0.98rem;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    thead {
+      background: #f1f5f9;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 700;
+      color: var(--text);
+      text-align: left;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-safe {
+      padding: 3px 8px;
+      background: #dcfce7;
+      color: #065f46;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    /* FAQ Accordion */
+    .faq-block {
+      margin-top: 20px;
+    }
+
+    .faq-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background: #f8fafc;
+    }
+
+    .faq-header {
+      padding: 14px 18px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text);
+    }
+
+    .faq-body {
+      padding: 0 18px 14px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      display: none;
+      line-height: 1.6;
+    }
+
+    .faq-card.open {
+      background: var(--surface);
+      border-color: var(--primary);
+    }
+
+    .faq-card.open .faq-body {
+      display: block;
+    }
+
+    .faq-toggle {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .faq-card.open .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0f172a;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-xl);
+      transition: transform 0.2s ease;
+      z-index: 1000;
+    }
+
+    #toast.active {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 24px 16px;
+      margin-top: auto;
+    }
+
+    .footer-wrap {
+      max-width: 1050px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-subtle);
+    }
+
+    .footer-nav {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 8px;
+    }
+
+    .footer-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-nav a:hover {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-inner">
+      <a href="https://ahmedelazabdev.github.io/morsecodetranslator/" class="brand">
+        <span class="brand-badge">📡</span>
+        <span>Morse Code Translator</span>
+      </a>
+      <span class="status-tag">⚡ CW Audio & Text 100% Client-Side</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Morse Code Translator 📡 <span>Convert Text & Sound</span></h1>
+      <p>Translate plain English text into Morse code or decode dots and dashes back into characters. Synthesize authentic acoustic CW radio beeps and flash visual signals directly in your web browser.</p>
+    </section>
+
+    <!-- Main Translator Card -->
+    <section class="cleaner-card" id="cleaner-app">
+      <div class="card-topbar">
+        <div class="config-group">
+          <label class="mode-label" for="translation-mode">Direction:</label>
+          <select id="translation-mode" class="mode-dropdown" onchange="handleDirectionChange()">
+            <option value="text2morse" selected>Text ➔ Morse Code</option>
+            <option value="morse2text">Morse Code ➔ Text</option>
+          </select>
+        </div>
+
+        <div class="playback-controls">
+          <label for="speed-wpm">Speed:
+            <select id="speed-wpm" class="mode-dropdown">
+              <option value="12">12 WPM (Beginner)</option>
+              <option value="16">16 WPM (Standard)</option>
+              <option value="20" selected>20 WPM (PARIS norm)</option>
+              <option value="25">25 WPM (Fast)</option>
+              <option value="32">32 WPM (Expert)</option>
+            </select>
+          </label>
+
+          <label for="pitch-hz">Tone:
+            <select id="pitch-hz" class="mode-dropdown">
+              <option value="500">500 Hz (Low)</option>
+              <option value="600" selected>600 Hz (Standard CW)</option>
+              <option value="750">750 Hz (High)</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="workspace-grid">
+        <!-- Input Pane -->
+        <div class="pane pane-left">
+          <div class="pane-header">
+            <span class="pane-title" id="input-label">Text Input</span>
+            <button class="btn btn-secondary" style="padding: 3px 8px; font-size: 0.8rem;" onclick="loadSample()">Load Sample</button>
+          </div>
+          <textarea id="morse-input" class="code-input" placeholder="Type text here to translate into Morse code..." spellcheck="false" oninput="runTranslation()"></textarea>
+
+          <div class="stats-card">
+            <div class="stat-item">
+              <span class="val" id="stat-chars">0</span>
+              <span class="lbl">Characters</span>
+            </div>
+            <div class="stat-item">
+              <span class="val" id="stat-words">0</span>
+              <span class="lbl">Words</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output Pane -->
+        <div class="pane">
+          <div class="pane-header">
+            <span class="pane-title" id="output-label">Morse Code Output</span>
+            <div style="display: flex; align-items: center;">
+              <span class="indicator-badge" id="status-badge">Ready</span>
+              <span class="signal-light" id="signal-light" title="Acoustic Flash Light"></span>
+            </div>
+          </div>
+          <textarea id="morse-output" class="code-input code-output" readonly placeholder="Translated Morse code will appear here..."></textarea>
+
+          <div class="stats-card">
+            <div class="stat-item">
+              <span class="val" id="stat-dits">0</span>
+              <span class="lbl">Dits (.)</span>
+            </div>
+            <div class="stat-item">
+              <span class="val" id="stat-dahs">0</span>
+              <span class="lbl">Dahs (-)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Controls -->
+      <div class="action-controls">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button id="btn-play" class="btn btn-play" onclick="togglePlayAudio()">🔊 Play Sound</button>
+          <button class="btn btn-primary" onclick="copyResult()">📋 Copy Output</button>
+          <button class="btn btn-secondary" onclick="swapDirection()">⇄ Swap</button>
+          <button class="btn btn-secondary" onclick="downloadResult()">💾 Download .TXT</button>
+        </div>
+        <button class="btn btn-secondary" style="border: none;" onclick="clearAll()">Clear</button>
+      </div>
+
+      <!-- 3 Steps Bar -->
+      <div class="action-steps-bar">
+        <div class="action-step">
+          <span class="step-num">1</span>
+          <div class="step-text">
+            <strong class="step-title">Enter Message</strong>
+            <p>Type alphanumeric phrases, distress signals, or raw dots and dashes.</p>
+          </div>
+        </div>
+        <div class="action-step">
+          <span class="step-num">2</span>
+          <div class="step-text">
+            <strong class="step-title">Instant Conversion</strong>
+            <p>Standard ITU-R M.1677 translation processes every keystroke in real-time.</p>
+          </div>
+        </div>
+        <div class="action-step">
+          <span class="step-num">3</span>
+          <div class="step-text">
+            <strong class="step-title">Listen & Export</strong>
+            <p>Play acoustic CW sidetone beeps or copy clean text to your clipboard.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comprehensive Knowledge Base -->
+    <article class="article-container">
+      <h2>The Science of Morse Code: How Telegraphy Transformed Communications</h2>
+      <p>
+        Invented in the 1830s by Samuel Morse and Alfred Vail, Morse code revolutionized global telecommunications by converting letters, numerals, and punctuation into electrical on-off tone bursts. Today, it remains codified under the <strong>International Telecommunication Union (ITU-R M.1677-1)</strong> standard and continues to serve aviation, naval backup channels, search and rescue, and amateur radio operators (Ham Radio CW).
+      </p>
+
+      <div class="highlight-card">
+        <strong>💡 The Standard Timing Formula (PARIS Standard):</strong> All timing in International Morse Code is normalized around the word <strong>PARIS</strong>, which accounts for exactly 50 fundamental dot-units (including standard inter-character and inter-word spacings). At 20 Words Per Minute (WPM), the duration of 1 dot is calculated as:
+        <br><br>
+        <code>Duration of 1 Dit (ms) = 1200 / WPM = 1200 / 20 = 60 milliseconds</code>
+      </div>
+
+      <h3>Universal Timing Rules:</h3>
+      <ul>
+        <li><strong>Dot (Dit):</strong> 1 unit long (<code>.</code>).</li>
+        <li><strong>Dash (Dah):</strong> 3 units long (<code>-</code>).</li>
+        <li><strong>Intra-character spacing:</strong> 1 unit between dots and dashes in the same letter.</li>
+        <li><strong>Inter-letter spacing:</strong> 3 units between letters (represented as a space).</li>
+        <li><strong>Inter-word spacing:</strong> 7 units between complete words (represented as <code>/</code> or three spaces).</li>
+      </ul>
+
+      <h2>International Morse Code Alphabet & Numbers Chart</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Character</th>
+              <th>Morse Code</th>
+              <th>Phonetic Timing</th>
+              <th>Common Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>SOS</strong></td>
+              <td><code>... --- ...</code></td>
+              <td>di-di-dit dah-dah-dah di-di-dit</td>
+              <td>Universal maritime emergency distress signal.</td>
+            </tr>
+            <tr>
+              <td><strong>A / B / C</strong></td>
+              <td><code>.-</code> / <code>-...</code> / <code>-.-.</code></td>
+              <td>di-dah / dah-di-di-dit / dah-di-dah-dit</td>
+              <td>Standard alphanumeric characters.</td>
+            </tr>
+            <tr>
+              <td><strong>E</strong></td>
+              <td><code>.</code></td>
+              <td>dit</td>
+              <td>Shortest and most frequently transmitted English letter.</td>
+            </tr>
+            <tr>
+              <td><strong>T</strong></td>
+              <td><code>-</code></td>
+              <td>dah</td>
+              <td>Second most frequent letter in standard telegraphy.</td>
+            </tr>
+            <tr>
+              <td><strong>Digits (0-9)</strong></td>
+              <td>5 elements each</td>
+              <td>e.g., <code>1</code> = <code>.----</code>, <code>5</code> = <code>.....</code></td>
+              <td>Symmetric 5-unit structure designed for zero ambiguity.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Why Morse Code Remains Critical in Modern Avionics & Maritime</h2>
+      <p>
+        Despite advanced satellite and fiber-optic technologies, continuous wave (CW) Morse transmission possesses unmatched physical resilience:
+      </p>
+      <ol>
+        <li><strong>Extreme Narrowband Efficiency:</strong> A Morse CW signal requires less than 150 Hz of RF bandwidth, compared to 3,000 Hz for voice SSB or megahertz for digital video, allowing it to penetrate heavy atmospheric static and solar interference.</li>
+        <li><strong>Human Brain Decoding:</strong> The human ear can discern rhythmic audio tones buried deep inside random white noise where automated digital demodulators fail completely.</li>
+        <li><strong>Survival Signaling:</strong> Can be generated mechanically using flashlights, signal mirrors, whistle blasts, or knocking through rubble without electronics.</li>
+      </ol>
+
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <div class="faq-block">
+        <div class="faq-card">
+          <div class="faq-header" onclick="toggleFaqCard(this)">
+            <span>How do I separate words when typing Morse code into the decoder?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-body">
+            Use a forward slash (<code>/</code>) or multiple spaces between words. Each letter should be separated by a single space (for example: <code>.... . -.-- / - .... . .-. .</code> decodes to "HEY THERE").
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-header" onclick="toggleFaqCard(this)">
+            <span>Are my typed messages saved or recorded on a server?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-body">
+            No. The entire translation, dictionary lookups, and audio synthesis happen 100% locally within your browser using JavaScript and the Web Audio API. Zero data leaves your computer.
+          </div>
+        </div>
+
+        <div class="faq-card">
+          <div class="faq-header" onclick="toggleFaqCard(this)">
+            <span>Why is 600 Hz the default tone frequency?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-body">
+            Frequencies between 550 Hz and 700 Hz match the human auditory canal's optimal sensitivity curve, minimizing ear fatigue during extended CW listening sessions on radio receivers.
+          </div>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <div id="toast">Ready!</div>
+
+  <footer>
+    <div class="footer-wrap">
+      <p>© <span id="current-year"></span> All rights reserved — Morse Code Translator & Audio Utility.</p>
+      <div class="footer-nav">
+        <a href="#cleaner-app">Translator Tool</a>
+        <a href="https://1io-site.blogspot.com" target="_blank" rel="noopener">By: 1io.site</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Web Audio & Translator Engine -->
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    const MORSE_MAP = {
+      'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+      'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+      'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+      'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+      'Y': '-.--', 'Z': '--..',
+      '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+      '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+      '.': '.-.-.-', ',': '--..--', '?': '..--..', "'": '.----.', '!': '-.-.--',
+      '/': '-..-.', '(': '-.--.', ')': '-.--.-', '&': '.-...', ':': '---...',
+      ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '-': '-....-', '_': '..--.-',
+      '"': '.-..-.', '$': '...-..-', '@': '.--.-.'
+    };
+
+    const REVERSE_MAP = {};
+    for (const [k, v] of Object.entries(MORSE_MAP)) {
+      REVERSE_MAP[v] = k;
+    }
+
+    const morseInput = document.getElementById('morse-input');
+    const morseOutput = document.getElementById('morse-output');
+    const modeSelect = document.getElementById('translation-mode');
+    const inputLabel = document.getElementById('input-label');
+    const outputLabel = document.getElementById('output-label');
+    const speedSelect = document.getElementById('speed-wpm');
+    const pitchSelect = document.getElementById('pitch-hz');
+    const btnPlay = document.getElementById('btn-play');
+    const signalLight = document.getElementById('signal-light');
+
+    let audioCtx = null;
+    let isPlaying = false;
+    let playTimeout = null;
+
+    function runTranslation() {
+      const mode = modeSelect.value;
+      const text = morseInput.value;
+
+      if (mode === 'text2morse') {
+        const lines = text.toUpperCase().split('\n');
+        const translatedLines = lines.map(line => {
+          const words = line.trim().split(/\s+/);
+          return words.map(w => {
+            return w.split('').map(ch => MORSE_MAP[ch] || '').filter(Boolean).join(' ');
+          }).join(' / ');
+        });
+        morseOutput.value = text.trim() ? translatedLines.join('\n') : '';
+      } else {
+        const lines = text.split('\n');
+        const decodedLines = lines.map(line => {
+          const words = line.trim().split(/\s*[\/\\]\s*|\s{3,}/);
+          return words.map(w => {
+            const chars = w.trim().split(/\s+/);
+            return chars.map(c => REVERSE_MAP[c] || '').join('');
+          }).join(' ');
+        });
+        morseOutput.value = text.trim() ? decodedLines.join('\n') : '';
+      }
+
+      updateStats();
+    }
+
+    function updateStats() {
+      const inText = morseInput.value.trim();
+      const outText = morseOutput.value.trim();
+
+      document.getElementById('stat-chars').textContent = inText ? inText.length : 0;
+      document.getElementById('stat-words').textContent = inText ? inText.split(/\s+/).filter(Boolean).length : 0;
+
+      const dits = (outText.match(/\./g) || []).length;
+      const dahs = (outText.match(/-/g) || []).length;
+      document.getElementById('stat-dits').textContent = dits;
+      document.getElementById('stat-dahs').textContent = dahs;
+    }
+
+    function handleDirectionChange() {
+      const mode = modeSelect.value;
+      if (mode === 'text2morse') {
+        inputLabel.textContent = 'Text Input';
+        outputLabel.textContent = 'Morse Code Output';
+        morseInput.placeholder = 'Type text here to translate into Morse code...';
+        morseOutput.placeholder = 'Translated Morse code will appear here...';
+      } else {
+        inputLabel.textContent = 'Morse Code Input';
+        outputLabel.textContent = 'Text Output';
+        morseInput.placeholder = 'Paste Morse code here (use . - and / for words)...';
+        morseOutput.placeholder = 'Decoded plain text will appear here...';
+      }
+      runTranslation();
+    }
+
+    function swapDirection() {
+      stopAudio();
+      const currentOut = morseOutput.value;
+      modeSelect.value = modeSelect.value === 'text2morse' ? 'morse2text' : 'text2morse';
+      handleDirectionChange();
+      morseInput.value = currentOut;
+      runTranslation();
+      showToast('Swapped translation direction');
+    }
+
+    function loadSample() {
+      stopAudio();
+      if (modeSelect.value === 'text2morse') {
+        morseInput.value = 'SOS MAYDAY WE NEED IMMEDIATE ASSISTANCE';
+      } else {
+        morseInput.value = '... --- ... / -- .- -.-- -.. .- -.--';
+      }
+      runTranslation();
+      showToast('Sample message loaded');
+    }
+
+    function clearAll() {
+      stopAudio();
+      morseInput.value = '';
+      morseOutput.value = '';
+      runTranslation();
+      showToast('Cleared');
+    }
+
+    function copyResult() {
+      if (!morseOutput.value.trim()) {
+        showToast('⚠️ Nothing to copy!');
+        return;
+      }
+      navigator.clipboard.writeText(morseOutput.value).then(() => {
+        showToast('📋 Copied to clipboard!');
+      });
+    }
+
+    function downloadResult() {
+      if (!morseOutput.value.trim()) {
+        showToast('⚠️ No output to download!');
+        return;
+      }
+      const blob = new Blob([morseOutput.value], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'morse-translation.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('💾 Saved to morse-translation.txt');
+    }
+
+    /* Web Audio CW Tone Generation */
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioClass();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function togglePlayAudio() {
+      if (isPlaying) {
+        stopAudio();
+      } else {
+        playAudio();
+      }
+    }
+
+    function playAudio() {
+      initAudio();
+      const morse = (modeSelect.value === 'text2morse' ? morseOutput.value : morseInput.value).trim();
+      if (!morse) {
+        showToast('⚠️ No Morse code available to play!');
+        return;
+      }
+
+      isPlaying = true;
+      btnPlay.textContent = '⏹ Stop Sound';
+      btnPlay.className = 'btn btn-stop';
+
+      const wpm = parseInt(speedSelect.value, 10);
+      const dotMs = 1200 / wpm;
+      const freq = parseInt(pitchSelect.value, 10);
+
+      const queue = [];
+      for (let i = 0; i < morse.length; i++) {
+        const c = morse[i];
+        if (c === '.') {
+          queue.push({ on: true, dur: dotMs });
+          queue.push({ on: false, dur: dotMs }); // inter-element
+        } else if (c === '-') {
+          queue.push({ on: true, dur: dotMs * 3 });
+          queue.push({ on: false, dur: dotMs });
+        } else if (c === ' ') {
+          queue.push({ on: false, dur: dotMs * 2 }); // total 3 with previous
+        } else if (c === '/' || c === '\n') {
+          queue.push({ on: false, dur: dotMs * 6 }); // total 7 with previous
+        }
+      }
+
+      let step = 0;
+
+      function playNext() {
+        if (!isPlaying || step >= queue.length) {
+          stopAudio();
+          return;
+        }
+
+        const item = queue[step];
+        step++;
+
+        if (item.on) {
+          signalLight.classList.add('active');
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+          // Envelope to avoid speaker clicks
+          gain.gain.setValueAtTime(0, audioCtx.currentTime);
+          gain.gain.linearRampToValueAtTime(0.8, audioCtx.currentTime + 0.005);
+          gain.gain.setValueAtTime(0.8, audioCtx.currentTime + (item.dur / 1000) - 0.005);
+          gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + (item.dur / 1000));
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + (item.dur / 1000));
+        } else {
+          signalLight.classList.remove('active');
+        }
+
+        playTimeout = setTimeout(playNext, item.dur);
+      }
+
+      playNext();
+    }
+
+    function stopAudio() {
+      isPlaying = false;
+      if (playTimeout) clearTimeout(playTimeout);
+      signalLight.classList.remove('active');
+      btnPlay.textContent = '🔊 Play Sound';
+      btnPlay.className = 'btn btn-play';
+    }
+
+    function toggleFaqCard(header) {
+      header.parentElement.classList.toggle('open');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('active');
+      setTimeout(() => {
+        toast.classList.remove('active');
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
